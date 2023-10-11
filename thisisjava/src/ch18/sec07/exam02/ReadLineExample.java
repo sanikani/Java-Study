@@ -2,11 +2,12 @@ package ch18.sec07.exam02;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.security.ProtectionDomain;
 
 public class ReadLineExample {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(
-                new FileReader("C:/Users/sanik/바탕 화면/Study/Java-Study/thisisjava/src/ch18/sec07/exam02/ReadLineExample.java")
+                new FileReader("C:/Users/user/Desktop/STUDY/java-study/thisisjava/src/ch18/sec07/exam02/ReadLineExample.java")
         );
 
         int lineNo = 1;
@@ -18,7 +19,6 @@ public class ReadLineExample {
             System.out.println(lineNo + "\t" + str);
             lineNo++;
         }
-
         br.close();
     }
 }

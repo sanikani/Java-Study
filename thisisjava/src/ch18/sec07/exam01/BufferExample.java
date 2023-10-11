@@ -4,16 +4,12 @@ import java.io.*;
 
 public class BufferExample {
     public static void main(String[] args) throws Exception{
-        String originalFilePath1 =
-                BufferExample.class.getResource("originalFile1.jpg").getPath();
         String targetFilePath1 = "C:/Temp/targetFile1.jpg";
-        FileInputStream fis = new FileInputStream(originalFilePath1);
+        FileInputStream fis = new FileInputStream("C:/Temp/originalFile1.jpg");
         FileOutputStream fos = new FileOutputStream(targetFilePath1);
 
-        String originalFilePath2 =
-                BufferExample.class.getResource("originalFile2.jpg").getPath();
         String targetFilePath2 = "C:/Temp/targetFile2.jpg";
-        FileInputStream fis2 = new FileInputStream(originalFilePath2);
+        FileInputStream fis2 = new FileInputStream("C:/Temp/originalFile2.jpg");
         FileOutputStream fos2 = new FileOutputStream(targetFilePath2);
         BufferedInputStream bis = new BufferedInputStream(fis2);
         BufferedOutputStream bos = new BufferedOutputStream(fos2);
