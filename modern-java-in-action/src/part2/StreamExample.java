@@ -1,7 +1,7 @@
 package part2;
 
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 public class StreamExample {
 
@@ -34,7 +34,29 @@ public class StreamExample {
                         .map(Dish::getName)
                         .toList();
 
+        //Stream slicing
+        List<Dish> specialMenu = menu.stream()
+                .takeWhile(dish -> dish.getCalories() < 200)
+                .toList();
+        List<Dish> specialMenu2 = menu.stream()
+                .dropWhile(dish -> dish.getCalories() < 200)
+                .toList();
+        List<Dish> skip = menu.stream()
+                .filter(dish -> dish.getCalories() > 300)
+                .skip(1)
+                .toList();
+        List<Dish> dishes = menu.stream()
+                .filter(dish -> dish.getName().equals("고기"))
+                .limit(2)
+                .toList();
+        //Map chaining
+        List<Integer> mapChain = menu.stream()
+                .map(Dish::getName)
+                .map(String::length)
+                .toList();
     }
+
+
 
     static class Dish {
 
