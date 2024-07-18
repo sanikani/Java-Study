@@ -56,8 +56,6 @@ public class StreamExample {
                 .toList();
     }
 
-
-
     static class Dish {
 
         int calories;
