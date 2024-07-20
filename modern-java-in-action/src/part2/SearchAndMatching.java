@@ -6,10 +6,9 @@ import java.util.List;
 public class SearchAndMatching {
 
     public static void main(String[] args) {
-        List<Dish> menu =
-                Arrays.asList(new Dish(1, "밥", true)
-                        , new Dish(200, "김치", true)
-                        , new Dish(400, "돼지고기", false));
+
+        List<Dish> menu = Dish.getSamples();
+
         if (menu.stream().anyMatch(Dish::isVegetarian)) {
             System.out.println("Vegetarian menu");
         }
@@ -34,30 +33,4 @@ public class SearchAndMatching {
 
     }
 
-    static class Dish {
-
-        int calories;
-
-        String name;
-
-        boolean vegetarian;
-
-        public Dish(int calories, String name,boolean vegetarian) {
-            this.calories = calories;
-            this.name = name;
-            this.vegetarian = vegetarian;
-        }
-
-        public int getCalories() {
-            return calories;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        boolean isVegetarian() {
-            return vegetarian;
-        }
-    }
 }

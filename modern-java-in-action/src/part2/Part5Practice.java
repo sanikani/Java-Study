@@ -1,4 +1,4 @@
-package part2.practice;
+package part2;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,22 +6,11 @@ import java.util.Optional;
 
 import static java.util.Comparator.*;
 
-public class main {
+public class Part5Practice {
 
     public static void main(String[] args) {
-        Trader raoul = new Trader("Raoul", "Cambridge");
-        Trader mario = new Trader("Mario", "Millan");
-        Trader alan = new Trader("Alan", "Cambridge");
-        Trader brian = new Trader("Brian", "Cambridge");
-
-        List<Transaction> transactions = Arrays.asList(
-                new Transaction(brian,2011,300),
-                new Transaction(raoul,2012,1000),
-                new Transaction(raoul,2011,400),
-                new Transaction(mario,2012,710),
-                new Transaction(mario,2012,700),
-                new Transaction(alan,2012,950)
-        );
+        TransactionSample transactionSample = new TransactionSample();
+        List<Transaction> transactions = transactionSample.transactions;
 
         //2011년에 일어난 모든 트랜잭션 값을 찾아 오름차순
         System.out.println("1번");

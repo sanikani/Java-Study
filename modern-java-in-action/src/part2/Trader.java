@@ -1,4 +1,4 @@
-package part2.practice;
+package part2;
 
 public class Trader {
 
