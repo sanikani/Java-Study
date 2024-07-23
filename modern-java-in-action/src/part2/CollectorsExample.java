@@ -1,10 +1,10 @@
 package part2;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.IntStream;
 
+import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;
 
 public class CollectorsExample {
@@ -12,7 +12,7 @@ public class CollectorsExample {
         List<Dish> menu = Dish.getSamples();
 
         Optional<Dish> mostCalorieDish = menu.stream()
-                .collect(maxBy(Comparator.comparingInt(Dish::getCalories)));
+                .collect(maxBy(comparingInt(Dish::getCalories)));
 
         int totalCalories = menu.stream().collect(summingInt(Dish::getCalories));
 
@@ -45,5 +45,79 @@ public class CollectorsExample {
                                 return "No Vegetarian";
                             }
                         })));
+
+        Map<String, Dish> mostCaloricByName = menu.stream()
+                .collect(groupingBy(Dish::getName,
+                        collectingAndThen(
+                                maxBy(comparingInt(Dish::getCalories)),
+                                Optional::get
+                        )));
+
+        Map<Dish.Type, Integer> totalCaloriesByType =
+                menu.stream().collect(groupingBy(Dish::getType,
+                summingInt(Dish::getCalories)));
+
+        Map<Dish.Type, Set<CaloricLevel>> caloricLevelByType = menu.stream().collect(groupingBy(Dish::getType,
+                mapping(dish -> {
+                            if (dish.getCalories() <= 400) return CaloricLevel.DIET;
+                            else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
+                            else return CaloricLevel.FAT;
+                        },
+                        toCollection(HashSet::new))));
+
+        //분할 함수를 사용한 그룹화
+        Map<Boolean, List<Dish>> partitionedMenu = menu.stream().collect(partitioningBy(Dish::isVegetarian));
+        List<Dish> vegetarianDishes = menu.stream().filter(Dish::isVegetarian).toList();
+
+        //Collector를 두 번째 인수로 전달
+        Map<Boolean, Map<Dish.Type, List<Dish>>> vegetarianDishesByType = menu.stream()
+                .collect(
+                        partitioningBy(Dish::isVegetarian,
+                                groupingBy(Dish::getType))
+                );
+
+        Map<Boolean, Dish> mostCaloricPartitionedByVegetarian =
+                menu.stream().collect(
+                        partitioningBy(Dish::isVegetarian,
+                                collectingAndThen(maxBy(comparingInt(Dish::getCalories)),
+                                        Optional::get)));
+
+        List<Dish> dishes = menu.stream()
+                .collect(new ToListCollector<>());
+
+        List<Dish> dishes2 = menu.stream()
+                .collect(toList());
+
+        List<Dish> dishes3 = menu.stream()
+                .collect(ArrayList::new,
+                        List::add,
+                        List::addAll);
     }
+
+    public boolean isPrime(int candidate) {
+        int candidateRoot = (int) Math.sqrt((double) candidate);
+        return IntStream.range(2, candidateRoot)
+                .noneMatch(i -> candidate % i == 0);
+    }
+
+    public static boolean isPrime(List<Integer> primes, int candidate) {
+        int candidateRoot = (int) Math.sqrt(candidate);
+        return primes.stream()
+                .takeWhile(i -> i < candidateRoot)
+                .noneMatch(i -> candidate % i == 0);
+    }
+
+    public Map<Boolean, List<Integer>> partitionPrimes(int n) {
+        return IntStream.range(2, n).boxed()
+                .collect(
+                        partitioningBy(this::isPrime)
+                );
+    }
+
+    public Map<Boolean, List<Integer>> partitionPrimes2(int n) {
+        return IntStream.range(2, n).boxed()
+                .collect(new PrimeNumbersCollector());
+    }
+
+
 }
