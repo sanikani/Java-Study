@@ -17,4 +17,8 @@ public class TransactionSample {
             new Transaction(mario,2012,700),
             new Transaction(alan,2012,950)
     );
+
+    public List<Transaction> getSample() {
+        return transactions;
+    }
 }
