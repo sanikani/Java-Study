@@ -42,5 +42,25 @@ public class CollectionFactoryExample {
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
                 .forEachOrdered(System.out::println);
+
+        //Map merge
+        Map<String, String> map1 = Map.ofEntries(Map.entry("a", "aa"), Map.entry("b", "bb"));
+        Map<String, String> map2 = Map.ofEntries(Map.entry("aa", "aaa"), Map.entry("b", "bb"));
+
+        //변경 가능한 Map 선언
+        HashMap<String, String> everyone = new HashMap<>(map1);
+        map2.forEach((k, v) -> everyone.merge(k, v, (v1, v2) -> v1 + "&" + v2));
+
+        //merge를 이용한 초기화 검사(기존 코드)
+        HashMap<String, Integer> movieToCount = new HashMap<>();
+        String movieName = "JamesBond";
+        Integer count = movieToCount.get(movieName);
+        if (count == null) {
+            movieToCount.put(movieName, 1);
+        } else {
+            movieToCount.put(movieName, count + 1);
+        }
+        //개선한 코드
+        movieToCount.merge(movieName, 1, (key, c) -> c + 1);
     }
 }
