@@ -6,7 +6,9 @@ public class Order {
 
     private boolean urgent;
 
-    private  Product product;
+    private Product product;
+
+    private OrderStatus orderStatus;
 
     public static Order primeOrder(Product product) {
         Order order = new Order();
@@ -21,4 +23,5 @@ public class Order {
         order.urgent = true;
         return order;
     }
+
 }
